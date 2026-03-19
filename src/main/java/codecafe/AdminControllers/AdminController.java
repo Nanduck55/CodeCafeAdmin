@@ -1,5 +1,7 @@
 package codecafe.AdminControllers;
 
+import codecafe.model.Order;
+import codecafe.util.DatabaseHelper;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.FlowPane;
@@ -9,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.geometry.Pos;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class AdminController implements Initializable {
@@ -24,38 +27,60 @@ public class AdminController implements Initializable {
 
     private int currentpage = 1;
     private final int Cardsperpage = 8;
-    private int Orders = 22; //change 22 laterrr
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        ordersContainer.setHgap(30);
+        ordersContainer.setVgap(25);
+        ordersContainer.setAlignment(Pos.CENTER);
         System.out.println("Admin Controller Initialized. Fetching orders...");
-        renderOrders();
+        AutoRefresh.startTimer(() ->
+        renderOrders());
     }
 
     private void renderOrders() {
         ordersContainer.getChildren().clear();
 
-        int totalPages = (int) Math.ceil((double) Orders / Cardsperpage);
+        int starts = (currentpage - 1) * Cardsperpage;
+        List<Order> activeOrderList = DatabaseHelper.getActiveOrders();
+
+        int totalPages = (int) Math.ceil((double) activeOrderList.size() / Cardsperpage);
 
         pageLabel.setText("Page " + currentpage + "/" + totalPages);
 
         prevButton.setDisable(currentpage == 1);
         nextButton.setDisable(currentpage == totalPages);
 
-        int starts = (currentpage - 1) * Cardsperpage;
-        int ends = Math.min(starts + Cardsperpage, Orders);
+        if (activeOrderList.isEmpty()) {
+            javafx.scene.control.Label emptyMessage = new javafx.scene.control.Label("No Active Orders. Kitchen is clear!");
+            emptyMessage.setStyle("-fx-font-size: 24px; -fx-text-fill: #a9a9a9; -fx-font-weight: bold; -fx-padding: 50;");
+
+            ordersContainer.setAlignment(javafx.geometry.Pos.CENTER);
+            ordersContainer.getChildren().add(emptyMessage);
+
+            return;
+        }
+
+
+        ordersContainer.setAlignment(javafx.geometry.Pos.TOP_LEFT);
+
+        int ends = Math.min(starts + Cardsperpage, activeOrderList.size());
 
         for (int i = starts; i < ends; i++) {
-            int ordernum = i + 1;
-            javafx.scene.layout.VBox newCard = CreateOrderCard.createOrderCard(ordernum, () -> {
-                System.out.println("Completed Order Num #" + ordernum);
+            Order currentOrder = activeOrderList.get(i);
+            javafx.scene.layout.VBox newCard = CreateOrderCard.createOrderCard(currentOrder, () -> {
+                System.out.println("Completed Order Num #" + currentOrder.getOrderId());
+                completeOrder.processCompletion(currentOrder.getOrderId());
                 renderOrders();
-            } );
-            ordersContainer.getChildren().add(newCard);
+            });
 
+            ordersContainer.getChildren().add(newCard);
         }
     }
+
+
 
     //Button Events
 
@@ -69,7 +94,11 @@ public class AdminController implements Initializable {
 
     @FXML
     public void handlenextPage() {
-        int totalPages = (int) Math.ceil((double) Orders / Cardsperpage);
+        int totalOrders = DatabaseHelper.getActiveOrders().size();
+
+        int totalPages = (int) Math.ceil((double) totalOrders / Cardsperpage);
+        if (totalPages == 0) totalPages = 1;
+
         if (currentpage < totalPages) {
             currentpage++;
             renderOrders();

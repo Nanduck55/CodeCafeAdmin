@@ -1,49 +1,30 @@
 package codecafe.model;
 
 public class MenuItem {
-    private int id;
-    private String name;
-    private String category;
+    private int itemId;
+    private String itemName;
+    private int categoryId;
     private String description;
     private double price;
     private String imagePath;
     private boolean isAvailable;
 
-    public MenuItem(int id,String name,String category, String description, double price, String imagePath, boolean isAvailable ){
-        this.id = id;
-        this.name = name;
-        this.category = category;
+
+    public MenuItem(int itemId, String itemName, int categoryId, String description, double price, String imagePath, boolean isAvailable) {
+        this.itemId = itemId;
+        this.itemName = itemName;
+        this.categoryId = categoryId;
         this.description = description;
         this.price = price;
         this.imagePath = imagePath;
         this.isAvailable = isAvailable;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    public boolean isAvailable() {
-        return isAvailable;
-    }
+    public int getItemId() { return itemId; }
+    public String getItemName() { return itemName; }
+    public int getCategoryId() { return categoryId; }
+    public String getDescription() { return description; }
+    public double getPrice() { return price; }
+    public String getImagePath() { return imagePath; }
+    public boolean isAvailable() { return isAvailable; }
 }
