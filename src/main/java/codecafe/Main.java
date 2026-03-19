@@ -1,6 +1,7 @@
 package codecafe;
 
 import codecafe.util.DatabaseHelper;
+import codecafe.util.DatabaseComs;
 import codecafe.model.MenuItem;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -20,14 +21,14 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/codecafe/AdminDashboard.fxml"));
 
         DatabaseHelper.createNewTable();
-        DatabaseHelper.addItem(2, "The", "Fuckkk", "Yay", 50.0, "can.png", true);
+        DatabaseComs.addItem(2, "The", "Fuckkk", "Yay", 50.0, "can.png", true);
 
         Scene scene = new Scene(root, 1280, 800);
 
         primarystage.setTitle("Code Cafe Admin Panel");
         primarystage.setScene(scene);
         primarystage.show();
-        primarystage.setFullScreen(true);
+        //primarystage.setFullScreen(true);
     }
 
     public static void main(String [] args){

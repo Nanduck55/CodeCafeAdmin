@@ -2,8 +2,11 @@ package codecafe.AdminControllers;
 
 import codecafe.model.Order;
 import codecafe.util.DatabaseHelper;
+import codecafe.util.Nuke;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
@@ -12,6 +15,7 @@ import javafx.geometry.Pos;
 
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AdminController implements Initializable {
@@ -102,6 +106,31 @@ public class AdminController implements Initializable {
         if (currentpage < totalPages) {
             currentpage++;
             renderOrders();
+        }
+    }
+
+    @FXML
+    private Button nukeBtn;
+
+    @FXML
+    private FlowPane orderGrid;
+
+    @FXML
+    private void handleNukeButton() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("DATABASE RESET");
+        alert.setHeaderText("Wipe all order history?");
+        alert.setContentText("This will delete every order and reset the ID to #00001. This cannot be undone.");
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            Nuke.everything();
+            orderGrid.getChildren().clear();
+
+            System.out.println(" System Reset Successful.");
+        } else {
+            System.out.println("Reset Aborted.");
         }
     }
 

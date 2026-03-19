@@ -14,7 +14,7 @@ public class Order {
         this.orderType = orderType;
         this.orderTime = orderTime;
         this.status = status;
-        this.items = items;
+        this.items = orderDetails;
     }
 
     // Getters (Required for your Admin TableView)

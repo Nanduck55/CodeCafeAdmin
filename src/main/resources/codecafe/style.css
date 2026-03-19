@@ -52,3 +52,16 @@
 .nav-triangle:hover {
     -fx-text-fill: #553C9A;
 }
+
+#nukeBtn {
+    -fx-background-color: #e74c3c; /* A professional warning red */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+    -fx-padding: 8 15;
+    -fx-cursor: hand;
+}
+
+#nukeBtn:hover {
+    -fx-background-color: #c0392b; /* Darkens slightly when hovered */
+}
