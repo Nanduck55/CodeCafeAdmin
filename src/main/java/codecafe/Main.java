@@ -23,12 +23,12 @@ public class Main extends Application {
         DatabaseHelper.createNewTable();
         DatabaseComs.addItem(2, "The", "Fuckkk", "Yay", 50.0, "can.png", true);
 
-        Scene scene = new Scene(root, 1280, 800);
+         Scene scene = new Scene(root, 1280, 800);
 
         primarystage.setTitle("Code Cafe Admin Panel");
         primarystage.setScene(scene);
         primarystage.show();
-        //primarystage.setFullScreen(true);
+        primarystage.setFullScreen(true);
     }
 
     public static void main(String [] args){
