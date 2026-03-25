@@ -30,9 +30,9 @@ public class DatabaseComs {
     }
 
     public static void completeOrder(int orderId) {
-        String sql = "UPDATE orders SET status = 'Completed' WHERE order_id = ?";
+        String sql = "UPDATE orders SET status = 'Completed' WHERE id = ?";
 
-        try (Connection conn = getConnection(URL);
+        try (Connection conn = connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setInt(1, orderId);

@@ -2,16 +2,16 @@
 
 ![Static Badge](https://img.shields.io/badge/Java-17-ED8B00)
 ![Static Badge](https://img.shields.io/badge/Javafx-19-blue)
-![Static Badge](https://img.shields.io/badge/Database-Sqlite-07405e)
+![Static Badge](https://img.shields.io/badge/Database-MYSQL-%234479a1)
 ![Static Badge](https://img.shields.io/badge/Status-Active-green)
 ![Static Badge](https://img.shields.io/badge/Maven-C71A36?logo=apachemaven)
 
 
 ## Project Description 
 This is The Admin side of CodeCafe It only handles the Orders that the user will send on the Database so the Admin
-can easily complete and Delete Orders. It is built using Maven and Sqlite has a database helper to retrieve data.
+can easily complete and Delete Orders. It is built using Maven and mysql database has a database helper to retrieve data.
 
-The interface is kept simple and accessible as it is only used by the admin.
+The interface is kept simple and accessible as it is only used by the admin. This was converted using xampp oracles sql works the same so don't worry. 
 
 ## Project Team:
 
@@ -58,6 +58,10 @@ cd CodeCafeAdmin
    * Click "play" next to `javafx:run`.
    * Alternatively you can just type `mvn javafx:run` on vscode terminal instead of doing allat.
 
+### 4. Sql Setup
+#### A. XAMPP
+1. malek ako yapo zzz
+#### B. Standard JDBC
 
     
     

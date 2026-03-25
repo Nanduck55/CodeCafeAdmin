@@ -13,11 +13,14 @@ import static java.sql.DriverManager.getConnection;
 
 public class DatabaseHelper {
 
-    public static final String URL = "jdbc:sqlite:codecafe.db";
+    public static final String URL = "jdbc:mysql://localhost:3306/codecafe_db";
+    public static final String USER = "root";
+    public static final String PASS = "";
+
     public static Connection connect() {
         Connection Hello = null;
         try {
-            Hello = getConnection(URL);
+            Hello = getConnection(URL, USER, PASS);
             System.out.println("[Yay! Sqlite Connection has been established]");
         } catch (SQLException e) {
             System.out.println("[Connection Failed: " + e.getMessage() + " ]");
@@ -47,26 +50,34 @@ public class DatabaseHelper {
 
     public static List<Order> getActiveOrders() {
         List<Order> orders = new ArrayList<>();
-        String sql = "SELECT * FROM orders WHERE status = 'Active'";
+        String sql = "SELECT * FROM orders WHERE status = 'PENDING'";
 
-        try (Connection conn = getConnection(URL);
+        try (Connection conn = connect();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
-                int orderId = rs.getInt("order_id");
+                int orderId = rs.getInt("id");
                 String type = rs.getString("order_type");
-                String time = rs.getString("order_time");
+                String time = rs.getString("created_at");
                 String status = rs.getString("status");
 
                 List<String> drinksList = new ArrayList<>();
-                String itemSql = "SELECT quantity, item_name FROM order_items WHERE order_id = " + orderId;
+                String itemSql = "SELECT quantity, item_name, addons FROM order_items WHERE order_id = " + orderId;
 
                 try (Statement itemStmt = conn.createStatement();
                      ResultSet itemRs = itemStmt.executeQuery(itemSql)) {
                     while (itemRs.next()) {
-                        String drink = "x" + itemRs.getInt("quantity") + " " + itemRs.getString("item_name");
-                        drinksList.add(drink);
+                        String name = itemRs.getString("item_name");
+                        int qty = itemRs.getInt("quantity");
+                        String extras = itemRs.getString("addons");
+                        drinksList.add("x" + qty + " " + name);
+                        if (extras != null && !extras.trim().isEmpty()) {
+                            String[] addonArray = extras.split(",");
+                            for (String addon : addonArray) {
+                                drinksList.add("      + " + addon.trim());
+                            }
+                        }
                     }
                 }
                 System.out.println("DEBUG: Admin pulled " + drinksList.size() + " drinks for Order #" + orderId);

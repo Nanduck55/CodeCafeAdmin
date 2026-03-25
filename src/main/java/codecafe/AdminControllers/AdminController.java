@@ -33,6 +33,7 @@ public class AdminController implements Initializable {
     private final int Cardsperpage = 8;
 
 
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -112,8 +113,7 @@ public class AdminController implements Initializable {
     @FXML
     private Button nukeBtn;
 
-    @FXML
-    private FlowPane orderGrid;
+//Nuke button (Delete all) is currently bugged pero gumagana parin db deletion
 
     @FXML
     private void handleNukeButton() {
@@ -126,14 +126,19 @@ public class AdminController implements Initializable {
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
             Nuke.everything();
-            orderGrid.getChildren().clear();
+            ordersContainer.getChildren().clear();
+            renderOrders();
+
 
             System.out.println(" System Reset Successful.");
         } else {
             System.out.println("Reset Aborted.");
+
+
         }
     }
-
 }
+
+
 
 
