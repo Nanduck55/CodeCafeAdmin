@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="550.0" prefWidth="800.0" style="-fx-border-color: #6B3F2A; -fx-border-width: 5; -fx-border-radius: 10; -fx-background-radius: 10; -fx-background-color: #F4EFEA;" stylesheets="@settings.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="codecafe.settings.SettingsController">
+
+    <left>
+        <VBox prefWidth="230.0" spacing="10.0" styleClass="sidebar">
+            <children>
+                <Label styleClass="settings-title" text="Settings" />
+                <Region prefHeight="20.0" /> <Button mnemonicParsing="false" onAction="#showDataManagement" styleClass="sidebar-btn" text="Deletion Options" />
+
+                <Button mnemonicParsing="false" onAction="#showReporting" styleClass="sidebar-btn" text="Sales Report" />
+
+                <Region VBox.vgrow="ALWAYS" />
+                <Button mnemonicParsing="false" onAction="#closeSettings" styleClass="close-btn" text="Close KDS Settings" />
+            </children>
+        </VBox>
+    </left>
+
+    <center>
+        <StackPane styleClass="content-area">
+            <children>
+
+                <VBox fx:id="dataManagementPage" alignment="TOP_LEFT" spacing="20.0">
+                    <children>
+                        <Label styleClass="settings-title" text="Data Management" />
+                        <Label text="Manage database records and clear memory." wrapText="true" />
+
+                        <VBox alignment="CENTER_LEFT" spacing="15.0" styleClass="data-section">
+                            <children>
+                                <Button mnemonicParsing="false" onAction="#handleClearCompleted" styleClass="setting-btn" text="Clear Completed Orders" />
+                                <Button mnemonicParsing="false" onAction="#handleClearBatch" styleClass="setting-btn" text="Clear Current Page" />
+                                <Region prefHeight="20.0" />
+                                <Button mnemonicParsing="false" onAction="#handleNuke" styleClass="nuke-btn" text="Total Reset (Nuke)" />
+                            </children>
+                        </VBox>
+                    </children>
+                </VBox>
+
+                <VBox fx:id="reportingPage" alignment="TOP_LEFT" spacing="20.0" visible="false">
+                    <children>
+                        <Label styleClass="settings-title" text="Simple Reporting" />
+                        <Label text="Daily analytics and popular menu items." textFill="#555555" wrapText="true" />
+
+                        <javafx.scene.layout.HBox spacing="30.0">
+                            <children>
+
+                                <VBox styleClass="stat-card">
+                                    <children>
+                                        <Label styleClass="stat-title" text="TOTAL ORDERS" />
+                                        <Label fx:id="totalOrdersLabel" styleClass="stat-value" text="0" />
+                                    </children>
+                                </VBox>
+
+                                <VBox styleClass="stat-card">
+                                    <children>
+                                        <Label styleClass="stat-title" text="TOP SELLING ITEM" />
+                                        <Label fx:id="popularItemCountLabel" styleClass="stat-value" text="0" />
+                                        <Label fx:id="popularItemNameLabel" styleClass="stat-subtitle" text="Fetching..." />
+                                    </children>
+                                </VBox>
+
+                            </children>
+                        </javafx.scene.layout.HBox>
+
+                        <javafx.scene.layout.HBox spacing="30.0">
+                        </javafx.scene.layout.HBox>
+
+                        <Region prefHeight="20.0" />
+
+                        <javafx.scene.layout.HBox spacing="30.0">
+                            <children>
+
+                                <VBox styleClass="stat-card">
+                                    <children>
+                                        <Label styleClass="stat-title" text="PENDING IN KITCHEN" />
+                                        <Label fx:id="pendingOrdersLabel" styleClass="stat-value" text="0" />
+                                    </children>
+                                </VBox>
+
+                                <VBox styleClass="stat-card">
+                                    <children>
+                                        <Label styleClass="stat-title" text="DINE-IN vs TAKE-OUT" />
+                                        <Label fx:id="dineInTakeOutLabel" styleClass="stat-value" style="-fx-font-size: 32px;" text="0 / 0" />
+                                    </children>
+                                </VBox>
+
+                            </children>
+                        </javafx.scene.layout.HBox>
+
+                        <Region prefHeight="20.0" />
+                        <Button mnemonicParsing="false" onAction="#refreshReports" styleClass="setting-btn" text="Refresh Analytics" />
+
+                    </children>
+                </VBox>
+
+            </children>
+        </StackPane>
+    </center>
+</BorderPane>

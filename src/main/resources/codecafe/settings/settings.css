@@ -1,0 +1,145 @@
+.settings-root {
+    -fx-background-color: #F4EFEA;
+    -fx-padding: 30;
+    -fx-border-color: #6B3F2A;
+    -fx-border-width: 5;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+
+.settings-title {
+    -fx-font-family: "Poppins", "System";
+    -fx-font-size: 28px;
+    -fx-text-fill: #6B3F2A;
+    -fx-font-weight: bold;
+}
+
+.data-section {
+    -fx-background-color: #E6D8C9;
+    -fx-padding: 20;
+    -fx-background-radius: 10;
+}
+
+.section-header {
+    -fx-font-family: "System";
+    -fx-font-size: 18px;
+    -fx-text-fill: #111111;
+    -fx-font-weight: bold;
+}
+
+.setting-btn {
+    -fx-background-color: #C69A6B;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-min-width: 250px;
+    -fx-min-height: 40px;
+    -fx-background-radius: 20;
+    -fx-cursor: hand;
+}
+
+.setting-btn:hover {
+    -fx-background-color: #B5835A;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.nuke-btn {
+    -fx-background-color: #A34343; /* A nice, flat danger red */
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-min-width: 250px;
+    -fx-min-height: 40px;
+    -fx-background-radius: 20;
+    -fx-cursor: hand;
+}
+
+.nuke-btn:hover {
+    -fx-background-color: #8B3232;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.close-btn {
+    -fx-background-color: #6B3F2A;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-min-width: 150px;
+    -fx-min-height: 40px;
+    -fx-background-radius: 20;
+    -fx-cursor: hand;
+}
+
+.close-btn:hover {
+    -fx-background-color: #4A2B1D;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.sidebar {
+    -fx-background-color: #E6D8C9;
+    -fx-padding: 20 10 20 10;
+    -fx-border-color: #6B3F2A;
+    -fx-border-width: 0 3 0 0;
+}
+
+.sidebar-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #333333;
+    -fx-font-family: "System";
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-alignment: BASELINE_LEFT;
+    -fx-padding: 10 15 10 15;
+    -fx-pref-width: 200px;
+    -fx-cursor: hand;
+    -fx-background-radius: 5;
+}
+
+.sidebar-btn:hover {
+    -fx-background-color: #D5C5B3;
+}
+
+.sidebar-btn:pressed {
+    -fx-background-color: #C69A6B;
+    -fx-text-fill: white;
+}
+
+.content-area {
+    -fx-background-color: #F4EFEA;
+    -fx-padding: 40;
+}
+
+/* Analytics Dashboard Styles */
+.stat-card {
+    -fx-background-color: #E6D8C9;
+    -fx-padding: 20 30 20 30;
+    -fx-background-radius: 10;
+    -fx-min-width: 250px;
+    -fx-alignment: center;
+}
+
+.stat-title {
+    -fx-font-family: "System";
+    -fx-font-size: 16px;
+    -fx-text-fill: #555555;
+    -fx-font-weight: bold;
+}
+
+.stat-value {
+    -fx-font-family: "System";
+    -fx-font-size: 48px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #6B3F2A;
+}
+
+.stat-subtitle {
+    -fx-font-family: "System";
+    -fx-font-size: 16px;
+    -fx-text-fill: #111111;
+    -fx-font-weight: bold;
+    -fx-wrap-text: true;
+    -fx-text-alignment: center;
+}

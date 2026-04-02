@@ -18,7 +18,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primarystage) throws Exception {
 
-        Parent root = FXMLLoader.load(getClass().getResource("/codecafe/AdminDashboard.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/codecafe/KitchenDisplay.fxml"));
 
         //DatabaseHelper.createNewTable();
         //DatabaseComs.addItem(2, "The", "Fuckkk", "Yay", 50.0, "can.png", true);

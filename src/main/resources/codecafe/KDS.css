@@ -1,0 +1,59 @@
+.background {
+    -fx-background-color: #F4EFEA;
+}
+
+.top {
+    -fx-background-color: #6B3F2A;
+}
+
+.top-label {
+    -fx-font-family: "Poppins";
+    -fx-font-size: 42px;
+    -fx-text-fill: #FFFFFF; 
+    -fx-font-weight: bold; 
+}
+
+.back-next-btn {
+    -fx-background-color: #6b3e26; 
+    -fx-text-fill: white; 
+    -fx-font-size: 21px;
+    -fx-font-weight: bold;   
+
+    -fx-alignment: center;
+
+    -fx-min-width: 56px;
+    -fx-min-height: 56px;
+    -fx-max-width: 56px;
+    -fx-max-height: 56px;
+
+    -fx-background-radius: 10;
+}
+
+.back-next-btn:hover{
+    -fx-background-color: #8b5a3c;
+    -fx-cursor: hand;
+
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.total-orders {
+    -fx-font-family: "Poppins";
+    -fx-text-fill: #6B3F2A;  
+    -fx-font-size: 25px;
+    -fx-font-weight: 700; 
+}
+
+.settings-gear-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 40px;
+    -fx-cursor: hand;
+    -fx-padding: 0;
+}
+
+.settings-gear-btn:hover {
+    -fx-text-fill: #C69A6B;
+    -fx-scale-x: 1.15;
+    -fx-scale-y: 1.15;
+}
