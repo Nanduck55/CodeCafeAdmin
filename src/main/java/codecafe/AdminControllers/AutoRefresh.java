@@ -1,4 +1,4 @@
-package codecafe.AdminControllers; // Make sure this matches your folder!
+package codecafe.AdminControllers;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
