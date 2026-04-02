@@ -1,38 +1,43 @@
 // Nuke Aka the delete all is currently bugged
 
 package codecafe.util;
+import codecafe.util.DatabaseComs;
 
-import java.sql.*;
+import java.util.List;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Nuke {
-    public static void everything() {
-        System.out.println("NUKE SEQUENCE INITIATED... in 3... 2... 1...");
-        String sql1 = "TRUNCATE TABLE order_items";
-        String sql2 = "TRUNCATE TABLE orders";
 
-        try (Connection conn = DatabaseHelper.connect();
-             Statement stmt = conn.createStatement()) {
-
-            stmt.executeUpdate(sql1);
-            stmt.executeUpdate(sql2);
-
-            System.out.println("BOOM NUKE SUCCESSFUL: Database is now empty and counter is reset to 1.");
-
-        } catch (SQLException e) {
-            System.out.println("NUKE FAILED: " + e.getMessage());
-        }
+    // 1. Clear only Completed Orders
+    public static void completed() {
+        String sql = "DELETE FROM orders WHERE status = 'Completed'";
+        execute(sql);
     }
-    public static void fullReset() {
-        String sqlDelete = "DELETE FROM orders;";
-        String sqlResetCounter = "DELETE FROM sqlite_sequence WHERE name='orders';";
 
+    // 2. The Batch Delete (Current Page)
+    public static void batch(List<Integer> ids) {
+        if (ids == null || ids.isEmpty()) return;
+
+        // This converts the list [1, 2, 3] into the string "1, 2, 3"
+        String idList = ids.toString().replace("[", "").replace("]", "");
+
+        String sql = "DELETE FROM orders WHERE order_id IN (" + idList + ")";
+        execute(sql);
+    }
+
+    // 3. The Classic Total Reset
+    public static void everything() {
+        execute("TRUNCATE TABLE order_items");
+        execute("TRUNCATE TABLE orders");
+    }
+
+    // The runner that actually talks to MySQL
+    private static void execute(String sql) {
         try (Connection conn = DatabaseHelper.connect();
              Statement stmt = conn.createStatement()) {
-
-            stmt.executeUpdate(sqlDelete);
-            stmt.executeUpdate(sqlResetCounter);
-
-            System.out.println("DATABASE: Records purged and ID counter reset to 1.");
+            stmt.executeUpdate(sql);
         } catch (SQLException e) {
             e.printStackTrace();
         }

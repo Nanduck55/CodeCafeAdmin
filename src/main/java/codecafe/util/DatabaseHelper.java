@@ -15,7 +15,7 @@ public class DatabaseHelper {
 
     public static final String URL = "jdbc:mysql://localhost:3306/codecafe_db";
     public static final String USER = "root";
-    public static final String PASS = "";
+    public static final String PASS = "admin";
 
     public static Connection connect() {
         Connection Hello = null;
@@ -84,7 +84,8 @@ public class DatabaseHelper {
                 orders.add(new Order(orderId, type, time, status, drinksList));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+           System.out.println("Database Offline: " + e.getMessage());
+           return null;
         }
         return orders;
     }

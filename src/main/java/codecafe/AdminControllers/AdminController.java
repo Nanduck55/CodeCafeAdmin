@@ -5,15 +5,13 @@ import codecafe.util.DatabaseHelper;
 import codecafe.util.Nuke;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.*;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Button;
 import javafx.geometry.Pos;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -57,6 +55,16 @@ public class AdminController implements Initializable {
 
         prevButton.setDisable(currentpage == 1);
         nextButton.setDisable(currentpage == totalPages);
+
+        if (activeOrderList == null) {
+            javafx.scene.control.Label offline = new javafx.scene.control.Label("Database is offline");
+            offline.setStyle("-fx-font-size: 24px; -fx-text-fill: #a9a9a9; -fx-font-weight: bold; -fx-padding: 50;");
+
+            ordersContainer.setAlignment(javafx.geometry.Pos.CENTER);
+            ordersContainer.getChildren().add(offline);
+
+            return;
+        }
 
         if (activeOrderList.isEmpty()) {
             javafx.scene.control.Label emptyMessage = new javafx.scene.control.Label("No Active Orders. Kitchen is clear!");
@@ -116,28 +124,63 @@ public class AdminController implements Initializable {
 //Nuke button (Delete all) is currently bugged pero gumagana parin db deletion
 
     @FXML
-    private void handleNukeButton() {
+    private void handleManageData() {
+        List<String> choices = new ArrayList<>();
+        choices.add("Delete Completed Orders");
+        choices.add("Delete Current Page (Batch)");
+        choices.add("Total Reset (Nuke Everything)");
+
+        ChoiceDialog<String> dialog = new ChoiceDialog<>("Delete Completed Orders", choices);
+        dialog.setTitle("Data Management");
+        dialog.setHeaderText("Select Deletion Method");
+        dialog.setContentText("Choose how you want to clear data:");
+
+        dialog.initOwner(ordersContainer.getScene().getWindow());
+
+        Optional<String> result = dialog.showAndWait();
+
+        result.ifPresent(choice -> {
+            if (confirmAction(choice)) {
+                switch (choice) {
+                    case "Delete Completed Orders":
+                        Nuke.completed();
+                        break;
+                    case "Delete Current Page (Batch)":
+                        List<Integer> pageIds = getVisibleOrderIds();
+                        Nuke.batch(pageIds);
+                        break;
+                    case "Total Reset (Nuke Everything)":
+                        Nuke.everything();
+                        break;
+                }
+                renderOrders();
+            }
+        });
+    }
+
+    // Simple safety check
+    private boolean confirmAction(String action) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("DATABASE RESET");
-        alert.setHeaderText("Wipe all order history?");
-        alert.setContentText("This will delete every order and reset the ID to #00001. This cannot be undone.");
+        alert.initOwner(ordersContainer.getScene().getWindow());
+        alert.setHeaderText("Confirm " + action);
+        alert.setContentText("This action cannot be undone. Proceed?");
 
-        Optional<ButtonType> result = alert.showAndWait();
+        return alert.showAndWait().get() == ButtonType.OK;
+    }
 
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            Nuke.everything();
-            ordersContainer.getChildren().clear();
-            renderOrders();
+    private List<Integer> getVisibleOrderIds() {
+        List<Integer> ids = new ArrayList<>();
+        List<Order> activeOrders = DatabaseHelper.getActiveOrders();
 
-
-            System.out.println(" System Reset Successful.");
-        } else {
-            System.out.println("Reset Aborted.");
-
-
+        if (activeOrders != null) {
+            for (Order order : activeOrders) {
+                ids.add(order.getOrderId());
+            }
         }
+        return ids;
     }
 }
+
 
 
 

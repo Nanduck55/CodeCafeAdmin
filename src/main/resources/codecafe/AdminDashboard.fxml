@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.FlowPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="600.0" prefWidth="800.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="codecafe.AdminControllers.AdminController">
+<BorderPane prefHeight="600.0" prefWidth="800.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="codecafe.AdminControllers.AdminController">
    <top>
       <HBox alignment="CENTER_LEFT" BorderPane.alignment="TOP_RIGHT">
          <BorderPane.margin>
@@ -30,7 +25,7 @@
                   <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
                </opaqueInsets>
             </Region>
-            <Button fx:id="nukeBtn" mnemonicParsing="false" onAction="#handleNukeButton" text="Reset Order Data">
+            <Button fx:id="nukeBtn" mnemonicParsing="false" onAction="#handleManageData" text="Delete Options">
                <padding>
                   <Insets right="20.0" top="15.0" />
                </padding>

@@ -28,7 +28,7 @@ public class Main extends Application {
         primarystage.setTitle("Code Cafe Admin Panel");
         primarystage.setScene(scene);
         primarystage.show();
-        //primarystage.setFullScreen(true);
+        primarystage.setFullScreen(true);
     }
 
     public static void main(String [] args){
