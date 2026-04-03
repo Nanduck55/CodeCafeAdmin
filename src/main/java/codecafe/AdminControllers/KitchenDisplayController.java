@@ -39,9 +39,11 @@ public class KitchenDisplayController implements Initializable {
 
     public void renderPage() {
         ordersGrid.getChildren().clear();
+
+        // 1. Fetch fresh data
         activeOrderList = DatabaseHelper.getActiveOrders();
 
-
+        // 2. Handle Offline State
         if (activeOrderList == null) {
             Label offline = new Label("Database is offline");
             offline.setStyle("-fx-font-size: 24px; -fx-text-fill: #a9a9a9; -fx-font-weight: bold; -fx-padding: 50;");
@@ -50,7 +52,7 @@ public class KitchenDisplayController implements Initializable {
             return;
         }
 
-
+        // 3. Handle Empty State
         if (activeOrderList.isEmpty()) {
             Label emptyMessage = new Label("No Active Orders. Kitchen is clear!");
             emptyMessage.setStyle("-fx-font-size: 24px; -fx-text-fill: #a9a9a9; -fx-font-weight: bold; -fx-padding: 50;");
@@ -60,6 +62,7 @@ public class KitchenDisplayController implements Initializable {
             return;
         }
 
+        // 4. Calculate Pagination
         int startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
         if (startIndex >= activeOrderList.size() && currentPage > 1) {
             currentPage--;
@@ -68,6 +71,7 @@ public class KitchenDisplayController implements Initializable {
 
         int endIndex = Math.min(startIndex + ITEMS_PER_PAGE, activeOrderList.size());
 
+        // 5. Render the 4x2 Grid
         int col = 0;
         int row = 0;
 
@@ -124,6 +128,7 @@ public class KitchenDisplayController implements Initializable {
         next_btn_orders.setDisable(currentPage >= totalPages);
     }
 
+    // BATCH FIX: Now only grabs the IDs that are currently displayed on the 4x2 grid
     public List<Integer> getVisibleOrderIds() {
         List<Integer> ids = new ArrayList<>();
         if (activeOrderList == null || activeOrderList.isEmpty()) return ids;
@@ -145,14 +150,21 @@ public class KitchenDisplayController implements Initializable {
 
             codecafe.settings.SettingsController settingsCtrl = loader.getController();
             settingsCtrl.setMainController(this);
+
+            // 1. Create a dark, 60% transparent background overlay
             javafx.scene.layout.StackPane darkOverlay = new javafx.scene.layout.StackPane(settingsUI);
             darkOverlay.setStyle("-fx-background-color: rgba(0, 0, 0, 0.6);");
 
+            // 2. Stretch it to cover all 4 corners of your screen
             javafx.scene.layout.AnchorPane.setTopAnchor(darkOverlay, 0.0);
             javafx.scene.layout.AnchorPane.setBottomAnchor(darkOverlay, 0.0);
             javafx.scene.layout.AnchorPane.setLeftAnchor(darkOverlay, 0.0);
             javafx.scene.layout.AnchorPane.setRightAnchor(darkOverlay, 0.0);
+
+            // 3. Give Settings a command to delete this overlay when "Close" is clicked
             settingsCtrl.setCloseAction(() -> mainRoot.getChildren().remove(darkOverlay));
+
+            // 4. Inject it into the screen!
             mainRoot.getChildren().add(darkOverlay);
 
         } catch (java.io.IOException e) {

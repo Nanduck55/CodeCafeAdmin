@@ -1,4 +1,4 @@
-# CodeCafe Admin Dashboard
+# CodeCafe Kitchen Display System
 
 ![Static Badge](https://img.shields.io/badge/Java-17-ED8B00)
 ![Static Badge](https://img.shields.io/badge/Javafx-19-blue)
@@ -8,10 +8,10 @@
 
 
 ## Project Description 
-This is The Admin side of CodeCafe It only handles the Orders that the user will send on the Database so the Admin
+This is The Kitchen side of CodeCafe It only handles the Orders that the user will send on the Database so the Admin
 can easily complete and Delete Orders. It is built using Maven and mysql database has a database helper to retrieve data.
 
-The interface is kept simple and accessible as it is only used by the admin. This was converted using xampp oracles sql works the same so don't worry. 
+The interface is kept simple and accessible as it is only used by the admin. This was converted using oracles sql workbench. 
 
 ## Project Team:
 
