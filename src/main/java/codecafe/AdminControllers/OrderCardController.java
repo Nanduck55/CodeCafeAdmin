@@ -1,7 +1,6 @@
 package codecafe.AdminControllers;
 
 import codecafe.model.Order;
-// If your items are stored as a different class (like MenuItem), import it here!
 // import codecafe.model.MenuItem;
 
 import javafx.fxml.FXML;

@@ -1,4 +1,4 @@
-package codecafe.AdminControllers; // Make sure your package name matches
+package codecafe.AdminControllers;
 
 import codecafe.util.DatabaseComs;
 

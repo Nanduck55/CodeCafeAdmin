@@ -8,7 +8,6 @@ public class Order {
     private String status;
     private List<String> items;
 
-    // Constructor matching the database columns exactly
     public Order(int orderId, String orderType, String orderTime, String status, List<String> orderDetails) {
         this.orderId = orderId;
         this.orderType = orderType;
@@ -17,7 +16,6 @@ public class Order {
         this.items = orderDetails;
     }
 
-    // Getters (Required for your Admin TableView)
     public int getOrderId() { return orderId; }
     public String getOrderType() { return orderType; }
     public String getOrderTime() { return orderTime; }
