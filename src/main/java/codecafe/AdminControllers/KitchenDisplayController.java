@@ -128,7 +128,6 @@ public class KitchenDisplayController implements Initializable {
         next_btn_orders.setDisable(currentPage >= totalPages);
     }
 
-    // BATCH FIX: Now only grabs the IDs that are currently displayed on the 4x2 grid
     public List<Integer> getVisibleOrderIds() {
         List<Integer> ids = new ArrayList<>();
         if (activeOrderList == null || activeOrderList.isEmpty()) return ids;
@@ -150,21 +149,14 @@ public class KitchenDisplayController implements Initializable {
 
             codecafe.settings.SettingsController settingsCtrl = loader.getController();
             settingsCtrl.setMainController(this);
-
-            // 1. Create a dark, 60% transparent background overlay
             javafx.scene.layout.StackPane darkOverlay = new javafx.scene.layout.StackPane(settingsUI);
             darkOverlay.setStyle("-fx-background-color: rgba(0, 0, 0, 0.6);");
 
-            // 2. Stretch it to cover all 4 corners of your screen
             javafx.scene.layout.AnchorPane.setTopAnchor(darkOverlay, 0.0);
             javafx.scene.layout.AnchorPane.setBottomAnchor(darkOverlay, 0.0);
             javafx.scene.layout.AnchorPane.setLeftAnchor(darkOverlay, 0.0);
             javafx.scene.layout.AnchorPane.setRightAnchor(darkOverlay, 0.0);
-
-            // 3. Give Settings a command to delete this overlay when "Close" is clicked
             settingsCtrl.setCloseAction(() -> mainRoot.getChildren().remove(darkOverlay));
-
-            // 4. Inject it into the screen!
             mainRoot.getChildren().add(darkOverlay);
 
         } catch (java.io.IOException e) {
