@@ -38,3 +38,22 @@
     -fx-scale-y: 1.05;
 }
 
+.invisible-scroll {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-border-width: 0;
+}
+
+.invisible-scroll > .viewport {
+    -fx-background-color: transparent;
+}
+
+.invisible-scroll .scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+.invisible-scroll .scroll-bar:vertical .track {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+

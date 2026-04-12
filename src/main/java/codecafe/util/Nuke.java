@@ -1,4 +1,3 @@
-// Nuke Aka the delete all is currently bugged
 
 package codecafe.util;
 import codecafe.util.DatabaseComs;
@@ -10,20 +9,11 @@ import java.sql.Statement;
 
 public class Nuke {
 
-    // 1. Clear only Completed Orders
-    public static void completed() {
-        String sql = "DELETE FROM orders WHERE status = 'Completed'";
-        execute(sql);
-    }
-
-    // 2. The Batch Delete (Current Page)
+    // 2. The Batch "Complete" (Current Page)
     public static void batch(List<Integer> ids) {
         if (ids == null || ids.isEmpty()) return;
-
-        // This converts the list [1, 2, 3] into the string "1, 2, 3"
         String idList = ids.toString().replace("[", "").replace("]", "");
-
-        String sql = "DELETE FROM orders WHERE order_id IN (" + idList + ")";
+        String sql = "UPDATE orders SET status = 'Completed' WHERE id IN (" + idList + ")";
         execute(sql);
     }
 

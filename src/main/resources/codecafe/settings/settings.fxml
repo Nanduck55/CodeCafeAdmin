@@ -11,7 +11,9 @@
                 <Label styleClass="settings-title" text="Settings" />
                 <Region prefHeight="20.0" /> <Button mnemonicParsing="false" onAction="#showDataManagement" styleClass="sidebar-btn" text="Deletion Options" />
 
-                <Button mnemonicParsing="false" onAction="#showReporting" styleClass="sidebar-btn" text="Sales Report" />
+                <Button mnemonicParsing="false" onAction="#showReporting" styleClass="sidebar-btn" text="Daily Report" />
+                <Button mnemonicParsing="false" onAction="#MonthlyReportTabClick" styleClass="sidebar-btn" text="Monthly Report" />
+                <Button mnemonicParsing="false" onAction="#showRecentOrdersTab" styleClass="sidebar-btn" text="Recent Orders" />
 
                 <Region VBox.vgrow="ALWAYS" />
                 <Button mnemonicParsing="false" onAction="#closeSettings" styleClass="close-btn" text="Close KDS Settings" />
@@ -22,7 +24,6 @@
     <center>
         <StackPane styleClass="content-area">
             <children>
-
                 <VBox fx:id="dataManagementPage" alignment="TOP_LEFT" spacing="20.0">
                     <children>
                         <Label styleClass="settings-title" text="Data Management" />
@@ -30,12 +31,12 @@
 
                         <VBox alignment="CENTER_LEFT" spacing="15.0" styleClass="data-section">
                             <children>
-                                <Button mnemonicParsing="false" onAction="#handleClearCompleted" styleClass="setting-btn" text="Clear Completed Orders" />
-                                <Button mnemonicParsing="false" onAction="#handleClearBatch" styleClass="setting-btn" text="Clear Current Page" />
+                                <Button mnemonicParsing="false" onAction="#handleClearBatch" styleClass="setting-btn" text="Batch Completion (Entire Page)" />
                                 <Region prefHeight="20.0" />
                                 <Button mnemonicParsing="false" onAction="#handleNuke" styleClass="nuke-btn" text="Total Reset (Nuke)" />
                             </children>
                         </VBox>
+
                     </children>
                 </VBox>
 
@@ -83,7 +84,7 @@
                                 <VBox styleClass="stat-card">
                                     <children>
                                         <Label styleClass="stat-title" text="DINE-IN vs TAKE-OUT" />
-                                        <Label fx:id="dineInTakeOutLabel" styleClass="stat-value" style="-fx-font-size: 32px;" text="0 / 0" />
+                                        <Label fx:id="dineInTakeOutLabel" style="-fx-font-size: 32px;" styleClass="stat-value" text="0 / 0" />
                                     </children>
                                 </VBox>
 
@@ -91,9 +92,49 @@
                         </javafx.scene.layout.HBox>
 
                         <Region prefHeight="20.0" />
-                        <Button mnemonicParsing="false" onAction="#refreshReports" styleClass="setting-btn" text="Refresh Analytics" />
+                        <Button mnemonicParsing="false" onAction="#handleRefreshAnalytics" styleClass="setting-btn" text="Refresh Analytics" />
 
                     </children>
+                </VBox>
+
+                <VBox fx:id="monthlyreport" spacing="30" alignment="CENTER" styleClass="report-container" visible="false">
+
+                    <Label text="Monthly Business Performance" style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: #202124;"/>
+
+                    <HBox spacing="25" alignment="CENTER">
+                        <VBox styleClass="metric-card" alignment="CENTER">
+                            <Label text="TOTAL ORDERS" styleClass="metric-title"/>
+                            <Label fx:id="mTotalOrdersLabel" text="0" styleClass="metric-value"/>
+                        </VBox>
+
+                        <VBox styleClass="metric-card" alignment="CENTER">
+                            <Label text="TOP SELLING ITEM" styleClass="metric-title"/>
+                            <Label fx:id="mTopSellingLabel" text="---" styleClass="metric-value-item"/>
+                        </VBox>
+                    </HBox>
+
+                    <HBox spacing="25" alignment="CENTER">
+                        <VBox styleClass="metric-card" alignment="CENTER">
+                            <Label text="TOTAL REVENUE" styleClass="metric-title"/>
+                            <Label fx:id="mTotalRevenueLabel" text="₱0.00" styleClass="metric-value-money"/>
+                        </VBox>
+
+                        <VBox styleClass="metric-card" alignment="CENTER">
+                            <Label text="AVG. ORDER VALUE" styleClass="metric-title"/>
+                            <Label fx:id="mAvgOrderLabel" text="₱0.00" styleClass="metric-value-money"/>
+                        </VBox>
+                    </HBox>
+
+                    <Button text="Generate / Refresh Report" onAction="#handleGenerateReport" styleClass="refresh-btn-light"/>
+                </VBox>
+
+                <VBox fx:id="recentOrdersPage" spacing="20" alignment="TOP_CENTER" styleClass="report-container" visible="false">
+                    <Label text="Recent Completed Orders" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #202124;"/>
+
+                    <ScrollPane fitToWidth="true" style="-fx-background: transparent; -fx-background-color: transparent;" vbarPolicy="AS_NEEDED">
+                        <VBox fx:id="recentOrdersList" spacing="10" alignment="TOP_CENTER">
+                        </VBox>
+                    </ScrollPane>
                 </VBox>
 
             </children>

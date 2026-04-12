@@ -114,25 +114,24 @@
 
 /* Analytics Dashboard Styles */
 .stat-card {
-    -fx-background-color: #E6D8C9;
-    -fx-padding: 20 30 20 30;
-    -fx-background-radius: 10;
-    -fx-min-width: 250px;
-    -fx-alignment: center;
+   -fx-background-color: #ffffff;
+       -fx-background-radius: 10;
+       -fx-min-width: 260;
+       -fx-min-height: 160;
+       -fx-padding: 25;
+       -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);
 }
 
 .stat-title {
-    -fx-font-family: "System";
-    -fx-font-size: 16px;
-    -fx-text-fill: #555555;
-    -fx-font-weight: bold;
+       -fx-text-fill: #5f6368;
+       -fx-font-weight: bold;
+       -fx-font-size: 14px;
 }
 
 .stat-value {
-    -fx-font-family: "System";
-    -fx-font-size: 48px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #6B3F2A;
+      -fx-text-fill: #202124;
+      -fx-font-size: 42px;
+      -fx-font-weight: bold;
 }
 
 .stat-subtitle {
@@ -142,4 +141,80 @@
     -fx-font-weight: bold;
     -fx-wrap-text: true;
     -fx-text-alignment: center;
+}
+
+.report-container {
+    -fx-background-color: #f8f9fa;
+    -fx-padding: 30;
+}
+
+.metric-card {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 10;
+    -fx-min-width: 260;
+    -fx-min-height: 160;
+    -fx-padding: 25;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);
+}
+
+.metric-title {
+    -fx-text-fill: #5f6368;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+.metric-value {
+    -fx-text-fill: #202124;
+    -fx-font-size: 42px;
+    -fx-font-weight: bold;
+}
+
+.metric-value-money {
+    -fx-text-fill: #1a73e8;
+    -fx-font-size: 34px;
+    -fx-font-weight: bold;
+}
+
+.metric-value-small {
+    -fx-text-fill: #202124;
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+}
+
+/* Space out the dropdowns so they don't touch */
+.recent-order-pane {
+    -fx-padding: 0 0 15 0;
+}
+
+/* The Clickable Header (Matches your .metric-card) */
+.recent-order-pane > .title {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 12;
+    -fx-padding: 15 25;
+    -fx-cursor: hand;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #202124;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 10, 0, 0, 4);
+}
+
+/* When the dropdown is OPEN, make the bottom corners flat */
+.recent-order-pane:expanded > .title {
+    -fx-background-radius: 12 12 0 0;
+}
+
+/* The Content Box (Where the items are listed) */
+.recent-order-content {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 0 0 12 12; /* Rounded bottom corners */
+    -fx-border-color: #e8eaed;
+    -fx-border-width: 1 0 0 0; /* Subtle line separating header from items */
+    -fx-padding: 20 25;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 10, 0, 0, 4);
+}
+
+/* Removes the default ugly blue focus ring when clicked */
+.recent-order-pane:focused {
+    -fx-color: transparent;
+    -fx-background-insets: 0;
 }

@@ -35,9 +35,9 @@ public class OrderCardController {
         for (String itemDetail : currentOrder.getItems()) {
 
             Label itemLbl = new Label(itemDetail);
-            if (itemDetail.toLowerCase().contains("add-on") || itemDetail.toLowerCase().contains("addons")) {
-                itemLbl.setStyle("-fx-font-family: 'System'; -fx-font-size: 13px; -fx-text-fill: #555555;");
-                VBox.setMargin(itemLbl, new Insets(0, 0, 0, 15)); // Keeps the nice indentation
+            if (itemDetail.trim().contains("Add-ons") || itemDetail.trim().toLowerCase().contains("+")) {
+                itemLbl.setStyle("-fx-font-family: 'System'; -fx-font-size: 14px; -fx-text-fill: #555555; -fx-font-weight: normal;");
+                VBox.setMargin(itemLbl, new Insets(0, 0, 0, 15));
             } else {
                 itemLbl.setStyle("-fx-font-family: 'System'; -fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #111111;");
             }

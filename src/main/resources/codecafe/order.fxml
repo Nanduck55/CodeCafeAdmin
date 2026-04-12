@@ -7,7 +7,7 @@
 
 <StackPane fx:id="orderCard" prefHeight="253.0" prefWidth="276.0" styleClass="order" stylesheets="@order.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="codecafe.AdminControllers.OrderCardController">
    <children>
-      <VBox prefHeight="200.0" prefWidth="100.0">
+      <VBox maxHeight="290.0" minHeight="290.0" prefHeight="250.0">
          <children>
             <HBox prefHeight="56.0" prefWidth="387.0">
                <children>
@@ -39,19 +39,23 @@
                   </Label>
                </children>
             </StackPane>
-            <VBox fx:id="itemsContainer" alignment="TOP_LEFT" prefHeight="204.0" prefWidth="367.0" stylesheets="@order.css">
-               <children>
-                  <HBox spacing="5" />
-               </children>
+            <ScrollPane fitToWidth="true" hbarPolicy="NEVER" styleClass="invisible-scroll" stylesheets="@order.css" VBox.vgrow="ALWAYS">
                <VBox.margin>
                   <Insets left="20.0" />
                </VBox.margin>
-            </VBox>
+               <content>
+                  <VBox fx:id="itemsContainer" alignment="TOP_LEFT" prefHeight="204.0" prefWidth="367.0" stylesheets="@order.css">
+                     <children>
+                        <HBox spacing="5" />
+                     </children>
+                  </VBox>
+               </content>
+            </ScrollPane>
             <StackPane prefHeight="61.0" prefWidth="387.0">
                <children>
                   <Button fx:id="complete_order" maxHeight="30.0" mnemonicParsing="false" onAction="#completeOrder" prefHeight="30.0" prefWidth="142.0" styleClass="complete-order-btn" stylesheets="@../codecafe/order.css" text="Complete order">
                      <StackPane.margin>
-                        <Insets bottom="10.0" />
+                        <Insets bottom="5.0" />
                      </StackPane.margin>
                   </Button>
                </children>

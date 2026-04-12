@@ -20,9 +20,6 @@ public class Main extends Application {
 
         Parent root = FXMLLoader.load(getClass().getResource("/codecafe/KitchenDisplay.fxml"));
 
-        //DatabaseHelper.createNewTable();
-        //DatabaseComs.addItem(2, "The", "Fuckkk", "Yay", 50.0, "can.png", true);
-
         Scene scene = new Scene(root, 1280, 800);
 
         primarystage.setTitle("Code Cafe Admin Panel");

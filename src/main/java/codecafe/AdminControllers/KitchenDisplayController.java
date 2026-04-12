@@ -39,8 +39,6 @@ public class KitchenDisplayController implements Initializable {
 
     public void renderPage() {
         ordersGrid.getChildren().clear();
-
-        // 1. Fetch fresh data
         activeOrderList = DatabaseHelper.getActiveOrders();
 
         // 2. Handle Offline State
@@ -162,6 +160,10 @@ public class KitchenDisplayController implements Initializable {
         } catch (java.io.IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public Stage getStage() {
+        return (Stage) mainRoot.getScene().getWindow();
     }
 
 
