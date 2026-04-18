@@ -13,8 +13,9 @@ public class RecentOrdersBuilder {
     public static void buildRecentOrdersList(VBox container) {
         container.getChildren().clear();
 
-        String orderQuery = "SELECT id, total_price, created_at FROM orders " +
-                "WHERE status = 'Completed' ORDER BY id DESC LIMIT 45";
+        String orderQuery = "SELECT id, order_type, total_price, created_at FROM orders " +
+                "WHERE status = 'Completed' AND DATE(created_at) = CURRENT_DATE() ORDER BY id DESC LIMIT 45";
+        System.out.print("wsd: " + orderQuery);
 
         try (Connection conn = DatabaseHelper.connect();
              PreparedStatement orderStmt = conn.prepareStatement(orderQuery);
@@ -24,9 +25,10 @@ public class RecentOrdersBuilder {
                 int orderId = orderRs.getInt("id");
                 double total = orderRs.getDouble("total_price");
                 String time = orderRs.getString("created_at");
+                String orderType = orderRs.getString("order_type");
 
                 TitledPane orderDropdown = new TitledPane();
-                orderDropdown.setText(String.format("Order #%d   |   ₱%,.2f   |   %s", orderId, total, time));
+                orderDropdown.setText(String.format("Order #%d   |    [%s]    |   ₱%,.2f   |   %s", orderId, orderType, total, time));
                 orderDropdown.setExpanded(false);
                 orderDropdown.getStyleClass().add("recent-order-pane");
 
@@ -35,7 +37,7 @@ public class RecentOrdersBuilder {
                 itemsBox.getStyleClass().add("recent-order-content");
 
                 // Fetch Items for this specific order
-                String itemQuery = "SELECT quantity, item_name, addons FROM order_items WHERE order_id = ?";
+                String itemQuery = "SELECT quantity, item_name, addons, price FROM order_items WHERE order_id = ?";
                 try (PreparedStatement itemStmt = conn.prepareStatement(itemQuery)) {
                     itemStmt.setInt(1, orderId);
                     try (ResultSet itemRs = itemStmt.executeQuery()) {
@@ -43,7 +45,8 @@ public class RecentOrdersBuilder {
                             int qty = itemRs.getInt("quantity");
                             String name = itemRs.getString("item_name");
                             String addons = itemRs.getString("addons");
-                            String displayText = qty + "x " + name;
+                            double price = itemRs.getDouble("price");
+                            String displayText = qty + "x " + name + String.format(" - P %.2f", price);
 
                             if(addons != null && !addons.trim().isEmpty() && !addons.equalsIgnoreCase("none")) {
                                 displayText += " (" + addons + ")";

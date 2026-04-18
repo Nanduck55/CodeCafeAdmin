@@ -18,7 +18,7 @@ public class SettingsController {
     @FXML private javafx.scene.control.Label totalOrdersLabel;
     @FXML private javafx.scene.control.Label popularItemCountLabel;
     @FXML private javafx.scene.control.Label popularItemNameLabel;
-    @FXML private javafx.scene.control.Label pendingOrdersLabel;
+    @FXML private javafx.scene.control.Label todayIncomeLabel;
     @FXML private javafx.scene.control.Label dineInTakeOutLabel;
     @FXML private Label mTotalOrdersLabel;
     @FXML private Label mTotalRevenueLabel;
@@ -27,7 +27,7 @@ public class SettingsController {
     @FXML private VBox recentOrdersPage;
     @FXML private VBox recentOrdersList;
 
-    // 1. Show Deletion / Data Management
+    // 1. Show Deletion
     @FXML
     private void showDataManagement() {
         dataManagementPage.setVisible(true);
@@ -47,7 +47,7 @@ public class SettingsController {
         if (recentOrdersPage != null) recentOrdersPage.setVisible(false);
     }
 
-    // 3. Show Monthly Report (The New One)
+    // Show Monthly Report
     @FXML
     private void MonthlyReportTabClick() {
         monthlyreport.setVisible(true);
@@ -81,6 +81,11 @@ public class SettingsController {
     }
 
     @FXML
+    private void handlebatchcld() {
+        if (dataHandler != null) dataHandler.clearBatchCL();
+    }
+
+    @FXML
     private void handleNuke() {
         if (dataHandler != null) {
             boolean wasNuked = dataHandler.nukeEverything();
@@ -105,14 +110,14 @@ public class SettingsController {
     @FXML
     private void handleRefreshAnalytics() {
         // 1. Fetch data from our new helper class
-        int totalOrders = codecafe.util.ReportsDH.getTotalOrdersToday();
-        int pendingOrders = codecafe.util.ReportsDH.getPendingCountToday();
-        String topSellingItem = codecafe.util.ReportsDH.getTopSellingItemToday();
-        String ratio = codecafe.util.ReportsDH.getDineInTakeOutRatioToday();
+        int totalOrders = ReportsDH.getTotalOrdersToday();
+        double todayIncome = ReportsDH.getTodayIncome();
+        String topSellingItem = ReportsDH.getTopSellingItemToday();
+        String ratio = ReportsDH.getDineInTakeOutRatioToday();
 
         // 2. Push that data to existing screen cards
         totalOrdersLabel.setText(String.valueOf(totalOrders));
-        pendingOrdersLabel.setText(String.valueOf(pendingOrders));
+        todayIncomeLabel.setText(String.format("P %.2f", todayIncome));
         popularItemCountLabel.setText(topSellingItem);
         dineInTakeOutLabel.setText(ratio);
 

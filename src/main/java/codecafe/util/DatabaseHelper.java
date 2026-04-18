@@ -1,6 +1,6 @@
 package codecafe.util;
 
-import codecafe.model.MenuItem;
+//import codecafe.model.MenuItem;
 import codecafe.model.Order;
 
 import java.awt.*;
@@ -11,7 +11,7 @@ import java.util.List;
 import static java.sql.DriverManager.getConnection;
 
 
-public class    DatabaseHelper {
+public class DatabaseHelper {
 
     public static final String URL = "jdbc:mysql://localhost:3306/codecafe_db";
     public static final String USER = "root";
@@ -28,6 +28,7 @@ public class    DatabaseHelper {
         return Hello;
     }
 
+    /*
     public static void createNewTable() {
         String sql = "Create Table if not Exists MenuItems(\n"
                 + "name TEXT NOT NULL, \n"
@@ -45,6 +46,8 @@ public class    DatabaseHelper {
             System.out.println("Error creating table: " + e.getMessage());
         }
     }
+
+     */
 
 
 

@@ -15,10 +15,10 @@
 }
 
 .complete-order-btn {
-    -fx-background-color: #C69A6B; 
-    -fx-text-fill: white; 
+    -fx-background-color: #C69A6B;
+    -fx-text-fill: white;
     -fx-font-size: 14px;
-    -fx-font-weight: bold;   
+    -fx-font-weight: bold;
 
     -fx-alignment: center;
 
@@ -55,5 +55,29 @@
 .invisible-scroll .scroll-bar:vertical .track {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
+}
+
+.cancel-order-btn {
+    -fx-background-color: #E63946;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+
+    -fx-alignment: center;
+
+    -fx-min-width: 142px;
+    -fx-min-height: 30px;
+    -fx-max-width: 142px;
+    -fx-max-height: 30px;
+
+    -fx-background-radius: 40;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.25), 5, 0.3, 0, 2);
+}
+
+.cancel-order-btn:hover {
+    -fx-cursor: hand;
+    -fx-background-color: #B71C1C;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
 }
 

@@ -3,11 +3,18 @@ package codecafe.AdminControllers;
 import codecafe.model.Order;
 // import codecafe.model.MenuItem;
 
+import codecafe.util.DatabaseHelper;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.util.Optional;
 
 public class OrderCardController {
 
@@ -52,4 +59,36 @@ public class OrderCardController {
         codecafe.AdminControllers.completeOrder.processCompletion(currentOrder.getOrderId());
         mainController.renderPage();
     }
+
+    @FXML
+    private void cancelOrder() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.initOwner(mainController.getStage());
+        alert.setTitle("Warning: Cancel Order");
+        alert.setHeaderText("Cancel Order #" + currentOrder.getOrderId() + "?");
+        alert.setContentText("Are you sure? This will remove the order from the kitchen queue and it will not be counted in today's sales.");
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            System.out.println("Cancelled Order Num #" + currentOrder.getOrderId());
+
+            try {
+                Connection conn = DatabaseHelper.connect();
+                String sql = "UPDATE orders SET status = 'CANCELLED' WHERE id = ?";
+
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                pstmt.setInt(1, currentOrder.getOrderId());
+                pstmt.executeUpdate();
+
+                mainController.renderPage();
+
+            } catch (Exception e) {
+                System.out.println("Error cancelling order: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
+    }
+
+
 }

@@ -25,44 +25,53 @@ public class ReportsDH {
         return total;
     }
 
-    // PENDING IN KITCHEN card
-    public static int getPendingCountToday() {
-        int count = 0;
-        String query = "SELECT COUNT(*) AS total FROM orders WHERE status = 'PENDING' AND DATE(created_at) = CURDATE()";
+    public static double getTodayIncome() {
+        double totalIncome = 0.0;
 
-        try (Connection conn = DatabaseHelper.connect();
-             PreparedStatement pstmt = conn.prepareStatement(query);
+        String sql = "SELECT SUM(total_price) AS daily_total FROM orders " +
+                "WHERE DATE(created_at) = CURDATE() AND status = 'Completed'";
+
+        try (Connection conn = DatabaseHelper.connect(); // Adjust to your DB connection
+             PreparedStatement pstmt = conn.prepareStatement(sql);
              ResultSet rs = pstmt.executeQuery()) {
 
             if (rs.next()) {
-                count = rs.getInt("total");
+                totalIncome = rs.getDouble("daily_total");
             }
+
         } catch (Exception e) {
+            System.out.println("Database Error loading Today's Income: " + e.getMessage());
             e.printStackTrace();
         }
-        return count;
+
+        // Return the raw number, NO UI updates here!
+        return totalIncome;
     }
 
     //TOP SELLING ITEM card
     public static String getTopSellingItemToday() {
-        String topItem = "No Sales Yet";
-        String query = "SELECT item_name, COUNT(*) AS qty_sold " +
-                "FROM order_items " +
-                "JOIN orders ON order_items.id = orders.id " +
-                "WHERE DATE(orders.created_at) = CURDATE() " +
-                "GROUP BY item_name " +
-                "ORDER BY qty_sold DESC LIMIT 1";
+        String topItem = "No sales yet";
+        String sql = "SELECT oi.item_name, SUM(oi.quantity) AS total_sold " +
+                "FROM order_items oi " +
+                "JOIN orders o ON oi.order_id = o.id " +
+                "WHERE DATE(o.created_at) = CURDATE() AND o.status = 'Completed' " +
+                "GROUP BY oi.item_name " +
+                "ORDER BY total_sold DESC " +
+                "LIMIT 1";
 
-        try (Connection conn = DatabaseHelper.connect();
-             PreparedStatement pstmt = conn.prepareStatement(query);
+        try (Connection conn = DatabaseHelper.connect(); // Adjust to your DB connection method
+             PreparedStatement pstmt = conn.prepareStatement(sql);
              ResultSet rs = pstmt.executeQuery()) {
 
             if (rs.next()) {
                 topItem = rs.getString("item_name");
             }
+
         } catch (Exception e) {
+            System.out.println("Error fetching top selling item: " + e.getMessage());
             e.printStackTrace();
         }
+
         return topItem;
     }
 
@@ -78,9 +87,11 @@ public class ReportsDH {
 
             while (rs.next()) {
                 String type = rs.getString("order_type");
-                if ("Dine-In".trim().equalsIgnoreCase(type)) {
+                String cleanType = type.trim();
+                if (cleanType.equalsIgnoreCase("Dine-In") || cleanType.equalsIgnoreCase("Dine In")) {
                     dineIn = rs.getInt("total");
-                } else if ("Take-Out".trim().equalsIgnoreCase(type)) {
+                }
+                else if (cleanType.equalsIgnoreCase("Take-Out") || cleanType.equalsIgnoreCase("Take Out")) {
                     takeOut = rs.getInt("total");
                 }
             }
@@ -92,8 +103,6 @@ public class ReportsDH {
 
     public static double[] getCurrentMonthStats() {
         double[] stats = new double[2];
-
-        // Sum the prices and count the rows for the current month/year
         String query = "SELECT COUNT(*) AS total_orders, " +
                 "COALESCE(SUM(total_price), 0) AS total_revenue " +
                 "FROM orders WHERE status = 'Completed' " +
@@ -115,24 +124,32 @@ public class ReportsDH {
     }
 
     public static String getTopSellingItem() {
-        String topItem = "None";
-        String query = "SELECT item_name, COUNT(*) as qty FROM order_items " +
-                "JOIN orders ON order_items.order_id = orders.order_number " +
-                "WHERE status = 'Completed' " +
-                "AND MONTH(created_at) = MONTH(CURRENT_DATE()) " +
-                "AND YEAR(created_at) = YEAR(CURRENT_DATE()) " +
-                "GROUP BY item_name ORDER BY qty DESC LIMIT 1";
+        String topItem = "No sales yet";
+
+        // The Bulletproof Monthly Query
+        String sql = "SELECT oi.item_name, SUM(oi.quantity) AS total_sold " +
+                "FROM order_items oi " +
+                "JOIN orders o ON oi.order_id = o.id " +
+                "WHERE MONTH(o.created_at) = MONTH(CURDATE()) " +
+                "AND YEAR(o.created_at) = YEAR(CURDATE()) " +
+                "AND o.status = 'Completed' " +
+                "GROUP BY oi.item_name " +
+                "ORDER BY total_sold DESC " +
+                "LIMIT 1";
 
         try (Connection conn = DatabaseHelper.connect();
-             PreparedStatement pstmt = conn.prepareStatement(query);
+             PreparedStatement pstmt = conn.prepareStatement(sql);
              ResultSet rs = pstmt.executeQuery()) {
 
             if (rs.next()) {
                 topItem = rs.getString("item_name");
             }
-        } catch (SQLException e) {
+
+        } catch (Exception e) {
+            System.out.println("Error fetching monthly top item: " + e.getMessage());
             e.printStackTrace();
         }
+
         return topItem;
     }
 

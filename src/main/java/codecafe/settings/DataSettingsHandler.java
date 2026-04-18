@@ -29,6 +29,23 @@ public class DataSettingsHandler {
         }
     }
 
+    public void clearBatchCL() {
+        if (confirmAction("Clear Current Page")) {
+            List<Integer> visibleIds = mainKdsController.getVisibleOrderIds();
+            Nuke.batchcl(visibleIds);
+            mainKdsController.renderPage();
+        }
+    }
+
+    private boolean confirmAction(String action) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.initOwner(mainKdsController.getStage());
+        alert.setHeaderText("Confirm " + action);
+        alert.setContentText("This action cannot be undone. Proceed?");
+        return alert.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK;
+
+    }
+
     public boolean nukeEverything() {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Security Authorization");
@@ -56,14 +73,7 @@ public class DataSettingsHandler {
         return true;
     }
 
-    private boolean confirmAction(String action) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.initOwner(mainKdsController.getStage());
-        alert.setHeaderText("Confirm " + action);
-        alert.setContentText("This action cannot be undone. Proceed?");
-        return alert.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK;
 
-    }
 
 
 }

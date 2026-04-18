@@ -1,5 +1,6 @@
-package codecafe.model;
+//package codecafe.model;
 
+/*
 public class MenuItem {
     private int itemId;
     private String itemName;
@@ -28,3 +29,5 @@ public class MenuItem {
     public String getImagePath() { return imagePath; }
     public boolean isAvailable() { return isAvailable; }
 }
+
+ */
